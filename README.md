@@ -5,20 +5,6 @@ competition "Wettbewerb künstliche Intelligenz in der Medizin" at TU Darmstadt.
 
 ## Installation
 
-All dependencies can be installed by running the following commands:
-
-```shell script
-git clone https://github.com/ChristophReich1996/ECG_Classification
-cd ECG_Classification
-pip install -r requirements.txt
-cd ecg_classification/pade_activation_unit/cuda
-python setup.py install
-cd ../../../
-```
-
-The implementation was tested [Gentoo Linux](https://www.gentoo.org/) 5.10.7, Python 3.8.5, and CUDA 11.1. **To perform 
-training and validation a CUDA device is needed!** This is due to the PAU implementation, which does not support 
-execution on the CPU. The functionality of this repository can not be guaranteed for other system configurations.
 
 ### Used Implementation
 
