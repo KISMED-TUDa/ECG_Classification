@@ -31,11 +31,13 @@ dtrain = xgb.DMatrix(X_train, label=y_train)
 dtest = xgb.DMatrix(X_test, label=y_test)
 
 # Specify params for xgboost
-param = {'max_depth': 10, 'eta': 0.1, 'gamma': 0, 'lambda': 1, 'objective': 'multi:softmax', 'num_classes': 4}
+param = {'max_depth': 10, 'eta': 0.1, 'gamma': 0, 'lambda': 1, 'objective': 'multi:softprob', 'num_classes': 4}
 
 # Init classifier and fit model
 classifier_xgb = xgb.XGBClassifier(param)
 classifier_xgb.fit(X_train,
                    y_train,
                    verbose=True,
+                   eval_metric='auc',
+                   early_stopping_rounds=10,
                    eval_set=[(X_test,y_test)])
