@@ -5,10 +5,14 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import f1_score
-import pickle
+
 
 # Load dataset with list of leads (numpy arr), labels (str), fs and ecg names
 ecg_leads, ecg_labels, fs, ecg_names = load_references(folder="/Users/Vladi/Desktop/training/")
+
+
+# Normalize ECG Leads to zero mean and unit variance
+ecg_leads = [(ecg_lead - ecg_lead.mean()) / (ecg_lead.std() + 1e-08) for ecg_lead in ecg_leads]
 
 # Transform list to dataframe for XGBoost
 ecg_leads = pd.DataFrame(ecg_leads)
@@ -78,6 +82,8 @@ loaded_model = xgb.Booster()
 # Load data
 loaded_model.load_model('baseline_model')
 '''
+
+# Predict labels on training set
 train_pred = model.predict(X_train)
 print('\nTarget on train data', train_pred)
 
@@ -94,7 +100,7 @@ F1 = 2 * (precision * recall) / (precision + recall)
 f1_train = f1_score(y_train, train_pred, average='macro')
 print('\nF1 Score on training dataset : ', f1_train)
 
-# predict the target on the test dataset
+# predict the Labels on the test dataset
 test_pred = model.predict(X_test)
 print('\nTarget on test data', test_pred)
 
